@@ -1,0 +1,67 @@
+{% extends 'user_panel_template.html' %}
+{% load humanize %}
+{% load render_partial %}
+{% block title %}سابقه خرید |{% endblock title %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5>سابقه خرید</h5></div>
+    <div class="card-divider"></div>
+    <div class="card-table">
+        <div class="table-responsive-sm">
+            <table>
+                <thead>
+                    <tr>
+                        <th>سفارش</th>
+                        <th>تاریخ</th>
+                        <th>وضعیت</th>
+                        <th>جمع کل</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                        <tr>
+                            <td><a href="#">#{{payment.id}}</a></td>
+                            <td>{{payment.register_date}}</td>
+                            {% if payment.is_finally %}
+                                <td style='color:green;'>پرداخت شده</td>
+                            {% else %}
+                                <td style='color:red;'>پرداخت نشده</td>
+                            {% endif %}
+                            <td>{{payment.amount|intcomma:False}} تومان</td>
+                            {% if payment.is_finally %}
+                                <td>
+                                    <a class='btn btn-success' href="{% url ':orders:checkout_order' order_id=payment.order.id %}">پرداخت</a>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% comment %} <div class="card-divider"></div>
+    <div class="card-footer">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link page-link--with-arrow" href="" aria-label="Previous">
+                    <svg class="page-link__arrow page-link__arrow--left" aria-hidden="true" width="8px" height="13px">
+                        <use xlink:href="images/sprite.svg#arrow-rounded-left-8x13"></use>
+                    </svg>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="">1</a></li>
+            <li class="page-item active"><a class="page-link" href="">2 <span class="sr-only">(کنونی)</span></a></li>
+            <li class="page-item"><a class="page-link" href="">3</a></li>
+            <li class="page-item">
+                <a class="page-link page-link--with-arrow" href="" aria-label="Next">
+                    <svg class="page-link__arrow page-link__arrow--right" aria-hidden="true" width="8px" height="13px">
+                        <use xlink:href="images/sprite.svg#arrow-rounded-right-8x13"></use>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </div> {% endcomment %}
+</div>
+{% endblock content %}

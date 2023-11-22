@@ -1,0 +1,31 @@
+{% extends 'main_parent.html' %}
+{% load render_partial %}
+{% block title %}سبد خرید |{% endblock title %}
+{% block content %}
+		<!-- site__body -->
+		<div class="site__body">
+			<div class="page-header">
+				<div class="page-header__container container">
+					<div class="page-header__breadcrumb">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="index.html">خانه</a>
+									/
+								</li>
+								<li class="breadcrumb-item active" aria-current="page">سبد خرید</li>
+							</ol>
+						</nav>
+					</div>
+					<div class="page-header__title">
+						<h1>سبد خرید</h1></div>
+				</div>
+			</div>
+			<div class="cart block">
+				
+				<div id='shop_cart_list'>
+					{% render_partial 'orders:show_shop_cart' %}
+				</div>
+			</div>
+		</div>
+		<!-- site__body / end -->
+{% endblock content %}

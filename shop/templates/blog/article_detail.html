@@ -1,0 +1,89 @@
+{% extends 'main_parent.html' %}
+{% load humanize %}
+{% load social_share %}
+{% block title %}{{article.title}} |{% endblock title %}
+{% block content %}
+<div class="site__body">
+    <div class="page-header">
+        <div class="page-header__container container">
+            <div class="page-header__breadcrumb">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'main:home' %}">خانه</a>
+                            /
+                        </li>
+                        <li class="breadcrumb-item"><a href="{% url 'blog:show_articles' %}">مقالات</a>
+                            /
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">{{article.title}}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-9 col-xl-8">
+                <div class="block post post--layout--full">
+                    <div class="post__header post-header post-header--layout--full">
+                        
+                        <h1 class="post-header__title">{{article.title}}</h1>
+                        <div class="post-header__meta">
+                            <div class="post-header__meta-item">{{article.group}}</div>
+                            <div class="post-header__meta-item">{{article.publish_date}}</div>
+                            <div class="post-header__meta-item">{{article.view_number}} بازدید</div>
+                        </div>
+                    </div>
+                    <div class="post__featured">
+                        <a href="{{media_url}}{{article.main_image}}" target="_blank"><img src="{{media_url}}{{article.main_image}}" alt="{{article.title}}"></a>
+                    </div>
+                    <div class="post__content typography typography--expanded">
+                        {% autoescape off %}
+                            {{article.text}}
+                        {% endautoescape %}
+                    </div>
+                    <div class="post__footer">
+                        <div class="post__tags-share-links">
+                            <div class="post__tags tags">
+                                <div class="tags__list">
+                                    {% for tag in tags %}
+                                        <a href='{% url "blog:search" %}?q={{tag}}'>{{tag}}</a>
+                                    {% endfor %} 
+                                </div>
+                            </div>
+                            <div class="post__share-links share-links">
+                                <ul class="share-links__list">
+                                    <li class="share-links__item share-links__item--type--like">
+                                        {% post_to_telegram 'My post:{{article.title}}' object_or_url '<i class="fa-brands fa-telegram fa-2x"></i>' %}
+                                    </li>
+                                    <li class="share-links__item share-links__item--type--like">
+                                        {% post_to_whatsapp object_or_url '<i class="fa-brands fa-whatsapp fa-2x"></i>' %}
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                                {% for i in article_authors %}
+                                    {% if i.article_id == article.id %}
+                                        {% for author in authors %}
+                                            {% if author.id == i.author_id %}
+                                                <div class="post-author">
+                                                    <div class="post-author__avatar">
+                                                        <a href="#"><img src="{{media_url}}{{author.image}}" alt="{{author.name}}-{{author.family}}"></a>
+                                                    </div>
+                                                    <div class="post-author__info">
+                                                        <div class="post-author__name">نویسنده : <a href="#">{{author.name}} {{author.family}}</a></div>
+                                                        <div class="post-author__about">{{author.description}}</div>
+                                                    </div>              
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

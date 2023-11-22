@@ -1,0 +1,35 @@
+<!-- .block-slideshow -->
+<div class="block-slideshow block-slideshow--layout--full block">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="block-slideshow__body">
+                    <div class="owl-carousel">
+                        {% for slider in sliders %}
+                            {% if slider.slider_link %}
+                                <a class="block-slideshow__slide" href="{{slider.slider_link}}" target='_blanck'>
+                            {% else %}
+                                <a class="block-slideshow__slide" href="#">
+                            {% endif %}
+                                <div class="block-slideshow__slide-image block-slideshow__slide-image--desktop"
+                                    style="background-image: url('{{media_url}}{{slider.image}}')"></div>
+                                <div class="block-slideshow__slide-image block-slideshow__slide-image--mobile"
+                                    style="background-image: url('{{media_url}}{{slider.image}}')"></div>
+                                {% if slider.text %}
+                                    <div class="block-slideshow__slide-content"style="width: 93%;">
+                                        <div class="block-slideshow__slide-text">
+                                            {% autoescape off %}
+                                            {{slider.text}}
+                                            {% endautoescape %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- .block-slideshow / end -->

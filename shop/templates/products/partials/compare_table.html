@@ -1,0 +1,98 @@
+{% load humanize %}
+<table class="compare-table">
+    <tbody>
+        {% if products %}
+        <tr>
+                <th>محصول</th>
+                {% for product in products %}
+                    <td>
+                        <a class="compare-table__product-link" href="{{product.get_absolute_url}}">
+                            <div class="compare-table__product-image"><img src="{{media_url}}{{product.image}}" alt="{{product.name}}"></div>
+                            <div class="compare-table__product-name">{{product.name}}</div>
+                        </a>
+                    </td>
+                {% endfor %}
+            
+        </tr>
+        <tr>
+            <th>امتیاز</th>
+            {% for product in products %}
+                <td>
+                    {{product.get_average_score}}
+                </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <th>موجودی</th>
+            {% for product in products %}
+                {% if product.get_number_in_warehouse > 0  %}
+                    <td><span class="compare-table__product-badge badge badge-success">موجود در انبار</span></td>
+                {% else %}
+                <td><span class="compare-table__product-badge badge badge-danger">ناموجود</span></td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% for feature in features %}
+            <tr>
+                <th>{{feature}}</th>
+                {% for product in products %}
+                    <td>
+                        {% for item in product.product_features.all %}
+                            {% if item.feature == feature %}
+                                {{item.filter_value.value_title}}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        
+        <tr>
+            <th>قیمت</th>
+            {% for product in products %}
+                <td>
+                    {% if product.price > product.get_price_by_discount %}
+                        <div><del style='color:red;'>{{ product.price  | intcomma:False  }} تومان</del></div>
+                        <div>{{ product.get_price_by_discount  | intcomma:False  }} تومان</div>
+                    {% else %}
+                        {{ product.price  | intcomma:False  }} تومان
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+
+        <tr>
+            <th></th>
+            {% for product in products %}
+            <td>
+                {% if  product.get_number_in_warehouse > 0 %}
+                <div style="width:60%;margin: 0px auto;">    
+                    <button id='{{product.id}}' type="button" class="btn btn-primary btn-sm" onclick="add_to_shop_cart({{product.id}},1)">
+                        {% if product.id in shop_cart_dict.keys %}
+                            موجود در سبد
+                        {% else %}
+                            افزودن به سبد
+                        {% endif %}
+                    </button>
+                </div>
+                {% else %}
+                    <p style='margin-bottom: 0;' id='{{item.product.id}}' class="btn btn-info btn-sm">افزودن به سبد</p>
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <th></th>
+            {% for product in products %}
+            <td>
+                <button class="btn btn-secondary btn-sm" onclick='deleteFromCampareList({{product.id}})'>حذف</button>
+            </td>
+            {% endfor %}
+        </tr>
+        {% else %}
+        <tr>
+            <th style='text-align:right;'>کالایی در لیست مقایسه موجود نیست.</th>
+        </tr>
+        {% endif %} 
+    </tbody>
+</table>

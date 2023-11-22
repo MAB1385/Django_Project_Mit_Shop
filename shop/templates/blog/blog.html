@@ -1,0 +1,110 @@
+{% extends 'main_parent.html' %}
+{% load humanize %}
+{% load render_partial %}
+{% block title %}مقالات |{% endblock title %}
+{% block content %}
+{% comment %} {% for group in product_groups %}
+                {% include 'partials/products/group_box.html' %}
+                {% endfor %} {% endcomment %}
+<div class="site__body">
+	<div class="page-header">
+		<div class="page-header__container container">
+			<div class="page-header__breadcrumb">
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="{% url 'main:home' %}">خانه</a>
+							/
+						</li>
+
+						<li class="breadcrumb-item active" aria-current="page">مقالات</li>
+					</ol>
+				</nav>
+			</div>
+			<div class="page-header__title">
+				<h1>لیست مقالات</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-12 col-lg-8">
+				<div class="block">
+					<div class="posts-view">
+						<div class="posts-view__list posts-list posts-list--layout--list">
+							<div class="posts-list__body">
+								{% for article in page_obj %}
+									{% include 'partials/blog/article_box.html' %}
+								{% endfor %}
+							</div>
+						</div>
+						<div class="posts-view__pagination">
+							{% if articles and articles|length > page_obj|length %}
+							{% include 'partials/pager.html' %}
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-lg-4">
+				<div class="block block-sidebar block-sidebar--position--end">
+					<div class="block-sidebar__item">
+						<div class="widget-search">
+							<form class="widget-search__body" action="{% url 'blog:search' %}">
+								<input class="widget-search__input" placeholder="جستجوی مقاله ..." type="text" autocomplete="off" spellcheck="false" name='q'>
+								<button class="widget-search__button" type="submit">
+										<i class="fa fa-search"></i>
+								</button>
+							</form>
+						</div>
+					</div>
+					{% comment %} <div class="block-sidebar__item">
+						<div class="widget-aboutus widget">
+							<h4 class="widget__title">درباره بلاگ</h4>
+							<div class="widget-aboutus__text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از
+								صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله
+								در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی</div>
+							<div class="widget-aboutus__socials">
+								<ul>
+									<li><a class="widget-aboutus__link widget-aboutus__link--rss" href="#"
+											target="_blank"><i class="widget-social__icon fas fa-rss"></i></a>
+									</li>
+									<li><a class="widget-aboutus__link widget-aboutus__link--youtube" href="#"
+											target="_blank"><i
+												class="widget-aboutus__icon fab fa-youtube"></i></a></li>
+									<li><a class="widget-aboutus__link widget-aboutus__link--facebook" href="#"
+											target="_blank"><i
+												class="widget-aboutus__icon fab fa-facebook-f"></i></a></li>
+									<li><a class="widget-aboutus__link widget-aboutus__link--twitter" href="#"
+											target="_blank"><i
+												class="widget-aboutus__icon fab fa-twitter"></i></a></li>
+									<li><a class="widget-aboutus__link widget-aboutus__link--instagram" href="#"
+											target="_blank"><i
+												class="widget-aboutus__icon fab fa-instagram"></i></a></li>
+								</ul>
+							</div>
+						</div>
+					</div> {% endcomment %}
+					{% render_partial 'blog:most_visited_articles' %}
+					{% comment %} <div class="block-sidebar__item">
+						<div class="widget-tags widget">
+							<h4 class="widget__title">برچسب ها</h4>
+							<div class="tags tags--lg">
+								<div class="tags__list">
+									<a href="#">aaaaa</a>
+									<a href="#">aaaaa</a>
+									<a href="#">aaaaa</a>
+									<a href="#">aaaaa</a>
+									<a href="#">aaaaa</a>
+									<a href="#">aaaaa</a>
+
+
+								</div>
+							</div>
+						</div>
+					</div> {% endcomment %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% load humanize %}
+<div class="filter__body" data-collapse-content>
+    <div class="filter__container">
+        <div class="filter-categories">
+            <ul class="filter-categories__list">
+                {% for group in product_groups %}
+                <li class="filter-categories__item filter-categories__item--parent">
+                    <svg class="filter-categories__arrow" width="6px" height="9px">
+                        <use xlink:href="images/sprite.svg#arrow-rounded-left-6x9"></use>
+                    </svg> <a href="{{group.get_absolute_url}}">{{group.title}}</a>
+                    <div class="filter-categories__counter">{{group.products_of_groups.all | length | intcomma:False}}</div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

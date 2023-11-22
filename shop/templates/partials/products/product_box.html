@@ -1,0 +1,195 @@
+{% load humanize %}
+{% if type == 1 %}
+<div class="product-card block-products__list-item" style="width:200px !important; margin-left: 12px;">
+    <div class="product-card__image">
+        <a href="{{product.get_absolute_url}}">
+
+            <img src="{{media_url}}{{product.image}}" alt="{{product.name}}">
+        </a>
+    </div>
+    <div class="product-card__info">
+        <div class="product-card__name">
+            <a href=" {{product.get_absolute_url}} ">
+                {{product.name}}
+            </a>
+        </div>
+    </div>
+    <div class="product-card__actions">
+        {% if product.get_number_in_warehouse <= 0 %}
+            <div class="product-card__prices" style='color:#ee4156;'>ناموجود</div>
+        {% else %}
+            {% if product.price > product.get_price_by_discount %}
+                <div class="product-card__prices">
+                    <del>{{ product.price  | intcomma:False  }} تومان</del>
+                </div>
+                <div class="product-card__prices">{{ product.get_price_by_discount  | intcomma:False  }} تومان</div>
+            {% else %}
+                <div class="product-card__prices">{{ product.price  | intcomma:False  }} تومان</div>
+            {% endif %}
+        {% endif %}
+        <div class="product-card__buttons">
+                {% if product.get_number_in_warehouse > 0 %}
+                    <button id='{{product.id}}' class="btn btn-primary product-card__addtocart" type="button" onclick="add_to_shop_cart({{product.id}},1)">
+                    {% if product.id in shop_cart_dict.keys %}
+                        موجود در سبد
+                    {% else %}
+                        افزودن به سبد
+                    {% endif %}
+                    </button>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    {% if product.get_user_favorite %}
+                        <button class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist favorite{{product.id}}" type="button" style="padding: 0px;color:red;" onclick='deleteFromFavorites({{product.id}})'>
+                            <i class="fa fa-heart favorite-i{{product.id}}"></i>
+                            <span class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+                        </button>
+                    {% else %}
+                        <button class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist favorite{{product.id}}" type="button" style="padding: 0px;" onclick='addToFavorites({{product.id}})'>
+                            <i class="fa fa-heart-broken favorite-i{{product.id}}"></i>
+                            <span class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+                        </button>
+                    {% endif %}
+                {% endif %}
+                {% if product.id not in request.session.compare_product %}
+                    <button id='compare-{{product.id}}' class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist" type="button" style="padding: 0px;"  onclick='addToCampareList({{product.id}})'>
+                        <i class="fa-solid fa-code-compare"></i>
+                        <span class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+                    </button>
+                {% endif %}
+        </div>
+    </div>
+</div>
+{% elif type == 2 %}
+<div class="product-card block-products__list-item" style="width:200px !important; margin-left: 12px;">
+    <div class="product-card__badges-list">
+        <div class="product-card__badge product-card__badge--sale">جدید</div>
+    </div>
+    <div class="product-card__image">
+        <a href="{{product.get_absolute_url}}">
+
+            <img src="{{media_url}}{{product.image}}" alt="{{product.name}}">
+        </a>
+    </div>
+    <div class="product-card__info">
+        <div class="product-card__name">
+            <a href="{{product.get_absolute_url}}">
+                {{product.name}}
+            </a>
+        </div>
+    </div>
+    <div class="product-card__actions">
+        {% if product.get_number_in_warehouse <= 0 %}
+        <div class="product-card__prices" style='color:#ee4156;'>ناموجود</div>
+        {% else %}
+            {% if product.price > product.get_price_by_discount %}
+                <div class="product-card__prices">
+                    <del>{{ product.price  | intcomma:False  }} تومان</del>
+                </div>
+                <div class="product-card__prices">{{ product.get_price_by_discount  | intcomma:False  }} تومان</div>
+            {% else %}
+                <div class="product-card__prices">{{ product.price  | intcomma:False  }} تومان</div>
+            {% endif %}
+        {% endif %}
+        <div class="product-card__buttons">
+            {% if product.get_number_in_warehouse > 0 %}
+                <button id='{{product.id}}' class="btn btn-primary product-card__addtocart" type="button" onclick="add_to_shop_cart({{product.id}},1)">
+                    {% if product.id in shop_cart_dict.keys %}
+                    موجود در سبد
+                    {% else %}
+                    افزودن به سبد
+                    {% endif %}
+                </button>
+                
+            {% endif %}
+            {% if user.is_authenticated %}
+                {% if product.get_user_favorite %}
+                <button class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist favorite{{product.id}}" type="button" style="padding: 0px;color:red;" onclick='deleteFromFavorites({{product.id}})'>
+                    <i class="fa fa-heart favorite-i{{product.id}}"></i>
+                    <span class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+                </button>
+                {% else %}
+                    <button class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist favorite{{product.id}}" type="button" style="padding: 0px;" onclick='addToFavorites({{product.id}})'>
+                        <i class="fa fa-heart-broken favorite-i{{product.id}}"></i>
+                        <span class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+                    </button>
+                {% endif %}
+                {% endif %}
+                {% if product.id not in request.session.compare_product %}
+                <button  id='compare-i{{product.id}}' class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist" type="button" style="padding: 0px;" onclick='addToCampareList({{product.id}})'>
+                    <i class="fa-solid fa-code-compare"></i>
+                    <span class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+                </button>
+                {% endif %}
+        </div>
+    </div>
+</div>
+{% elif type == 3 %}
+<div class="products-list__item">
+    <div class="product-card">
+        {% comment %} <div class="product-card__badges-list">
+            <div class="product-card__badge product-card__badge--new">جدید</div>
+        </div> {% endcomment %}
+        <div class="product-card__image">
+            <a href="{{product.get_absolute_url}}">
+                <img src="{{media_url}}{{product.image}}" alt="{{product.name}}">
+            </a>
+        </div>
+        <div class="product-card__info">
+            <div class="product-card__name"><a href="{{product.get_absolute_url}}">{{product.name}}</a></div>
+
+        </div>
+        <div class="product-card__actions">
+            {% if product.get_number_in_warehouse <= 0 %}
+                <div class="product-card__availability">موجودی: <span class="text-success">ناموجود</span></div>
+                <div class="product-card__prices" style='color:#ee4156;'>ناموجود</div>
+            {% else %}
+                <div class="product-card__availability">موجودی: <span class="text-success">موجود در انبار</span></div>
+                {% if product.price > product.get_price_by_discount %}
+                    <div class="product-card__prices">
+                        <del>{{ product.price  | intcomma:False  }} تومان</del>
+                    </div>
+                    <div class="product-card__prices">{{ product.get_price_by_discount  | intcomma:False  }} تومان</div>
+                {% else %}
+                    <div class="product-card__prices">{{ product.price  | intcomma:False  }} تومان</div>
+                {% endif %}
+            {% endif %}
+            <div class="product-card__buttons">
+                {% if product.get_number_in_warehouse > 0 %}
+                    <button id='{{product.id}}' class="btn btn-primary product-card__addtocart" type="button" onclick="add_to_shop_cart({{product.id}},1)">
+                        {% if product.id in shop_cart_dict.keys %}
+                        موجود در سبد 
+                        {% else %}
+                        افزودن به سبد
+                        {% endif %}
+                    </button>
+                    <button class="btn btn-secondary product-card__addtocart product-card__addtocart--list" type="button">افزودن به سبد</button>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    {% if product.get_user_favorite %}
+                        <button class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist favorite{{product.id}}" type="button" style="padding: 0px;color:red;" onclick='deleteFromFavorites({{product.id}})'>
+                            <i class="fa fa-heart favorite-i{{product.id}}"></i>
+                            <span class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+                        </button>
+                    {% else %}
+                        <button class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist favorite{{product.id}}" type="button" style="padding: 0px;" onclick='addToFavorites({{product.id}})'>
+                            <i class="fa fa-heart-broken favorite-i{{product.id}}"></i>
+                            <span class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+                        </button>
+                    {% endif %}
+                    {% endif %}
+                    {% if product.id not in request.session.compare_product %}
+                    <button  id='compare-{{product.id}}' class="btn btn-light btn-svg-icon btn-svg-icon--fake-svg product-card__wishlist" type="button" style="padding: 0px;" onclick='addToCampareList({{product.id}})'>
+                        <i class="fa-solid fa-code-compare"></i>
+                        <span class="fake-svg-icon fake-svg-icon--wishlist-16"></span>
+                    </button>
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+
+

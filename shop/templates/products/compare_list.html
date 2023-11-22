@@ -1,0 +1,36 @@
+{% extends 'main_parent.html' %}
+{% load humanize %}
+{% load render_partial %}
+{% block title %}مقایسه محصولات |{% endblock title %}
+{% block content %}
+<div class="site__body">
+    <div class="page-header">
+        <div class="page-header__container container">
+            <div class="page-header__breadcrumb">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'main:home' %}">خانه</a>
+                            /
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#">محصولات</a>
+                            /
+                        </li>
+                        <li class="active" aria-current="page">مقایسه</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="page-header__title">
+                <h1>مقایسه</h1></div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="container">
+            <div id='compare-list' class="table-responsive">
+                {% render_partial 'products:compare_table' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

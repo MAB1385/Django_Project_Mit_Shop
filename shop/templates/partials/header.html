@@ -1,0 +1,54 @@
+<!-- desktop site__header -->
+<header class="site__header d-lg-block d-none">
+    <div class="site-header">
+        <!-- .topbar -->
+        <div class="site-header__topbar topbar">
+            <div class="topbar__container container">
+                <div class="topbar__row">
+                    <div class="topbar__item topbar__item--link"><a class="topbar-link"
+                            href="about-us.html">درباره ما</a></div>
+                    <div class="topbar__item topbar__item--link"><a class="topbar-link"
+                            href="contact-us.html">تماس با ما</a></div>
+                    <div class="topbar__spring"></div>
+                    {% if user.is_authenticated %}
+                    <div class="topbar__item">
+                        <div class="topbar-dropdown">
+                            <button class="topbar-dropdown__btn" type="button">
+                                <a href="{% url 'accounts:user_panel' %}" class="topbar-link">پنل کاربری</a>
+                                <i class="fa fa-user"></i>
+                            </button>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="site-header__middle container">
+            <div class="site-header__logo">
+                <a href="{% url 'main:home' %}">
+                    <img src="{{media_url}}images//logo.png" height="90px" alt="shop">
+                </a>
+            </div>
+            <div class="site-header__search">
+                <div class="search">
+                    <form class="search__form" action="{% url 'search:search_view' %}">
+                        <input class="search__input" name="q" placeholder="جستجو از میان محصولات"
+                            aria-label="Site search" type="text" autocomplete="off">
+                        <button class="search__button" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <div class="search__border"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="site-header__phone">
+                <div class="site-header__phone-title">پشتیبانی</div>
+                <div class="site-header__phone-number"><span class="ltr_text">021-33813454</span></div>
+            </div>
+        </div>
+        <!-- .topbar / end -->
+        {% include 'partials/navbar.html' %}
+    </div>
+</header>
+<!-- desktop site__header / end -->

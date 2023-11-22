@@ -1,0 +1,68 @@
+{% load expr %}
+{% load index %}
+{% load tag_library %}
+{% for key,values in feature_dict.items %}
+    {% if values %}
+        {% expr feature_list[:] as my_list %}
+        <div class="widget-filters__item">
+            <div class="filter" data-collapse-item>
+                <div style="display: inline-flex;width: 77%;">
+                    <button type="button" class="filter__title" data-collapse-trigger>{{key}}
+                        <svg class="filter__arrow" width="12px" height="7px">
+                            <use xlink:href="images/sprite.svg#arrow-rounded-down-12x7"></use>
+                        </svg>
+                    </button>
+                </div>
+                {% for value in values %}
+                    {% if value.id|stringformat:'i' in feature_list %}
+                        <span style='display: none;'>{{my_list|remove:value.id}}</span>
+                    {% endif %}
+                {% endfor %}
+                {% if my_list|length != feature_list|length %}
+                    <a class='btn-filter-state' href="#" style='margin-right:10px;' onclick='remove_feature({{my_list}})'>
+                        <li class='fa fa-times'></li>
+                    </a>
+                {% endif %}
+                <div class="filter__body" data-collapse-content>
+                    <div class="filter__container">
+                        <div class="filter-list">
+                            <div class="filter-list__list">
+                                {% for value in values %}
+                                    {% if value.id|stringformat:'i' in feature_list %}
+                                        <label class="filter-list__item">
+                                            <span class="filter-list__input input-check">
+                                                <span class="input-check__body">
+                                                    <input name='feature' class="input-check__input" id="item-{{value.id}}" type="checkbox" value='{{value.id}}' checked> 
+                                                    
+                                                    <span class="input-check__box"></span>
+                                                    <svg class="input-check__icon" width="9px" height="7px">
+                                                        <use xlink:href="{{media_url}}images/sprite.svg#check-9x7"></use>
+                                                    </svg>
+                                                </span>
+                                            </span>
+                                            <span class="filter-list__title">{{value.value_title}}</span>
+                                        </label>
+                                    {% else %}
+                                        <label class="filter-list__item">
+                                            <span class="filter-list__input input-check">
+                                                <span class="input-check__body">
+                                                    <input name='feature' class="input-check__input" id="item-{{value.id}}" type="checkbox" value='{{value.id}}'> 
+                                                    <span class="input-check__box"></span>
+                                                    <svg class="input-check__icon" width="9px" height="7px">
+                                                        <use xlink:href="{{media_url}}images/sprite.svg#check-9x7"></use>
+                                                    </svg>
+                                                </span>
+                                            </span>
+                                            <span class="filter-list__title">{{value.value_title}}</span>
+                                        </label>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}

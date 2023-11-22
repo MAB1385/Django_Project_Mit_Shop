@@ -1,0 +1,30 @@
+{% load humanize %}
+{% for brand in brands %}
+    {% if brand.id|stringformat:'i' in brand_list %}
+    <label class="filter-list__item">
+        <span class="filter-list__input input-check">
+            <span class="input-check__body">
+                <input id='item-{{brand.id}}' class="input-check__input" type="checkbox" value='{{brand.id}}' name='brand' checked> 
+                <span class="input-check__box" ></span>
+                <svg class="input-check__icon" width="9px" height="7px">
+                    <use xlink:href="{{media_url}}images/sprite.svg#check-9x7"></use>
+                </svg>
+            </span>
+        </span>
+        <span class="filter-list__title">{{brand.title}}</span><span class="filter-list__counter">{{brand.count | intcomma:False }}</span>
+    </label>
+    {% else %}
+    <label class="filter-list__item">
+        <span class="filter-list__input input-check">
+            <span class="input-check__body">
+                <input id='item-{{brand.id}}' class="input-check__input" type="checkbox" value='{{brand.id}}' name='brand'> 
+                <span class="input-check__box"></span>
+                <svg class="input-check__icon" width="9px" height="7px">
+                    <use xlink:href="{{media_url}}images/sprite.svg#check-9x7"></use>
+                </svg>
+            </span>
+        </span>
+        <span class="filter-list__title">{{brand.title}}</span><span class="filter-list__counter">{{brand.count | intcomma:False }}</span>
+    </label>
+    {% endif %}
+{% endfor %}

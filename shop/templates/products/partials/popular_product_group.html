@@ -1,0 +1,17 @@
+
+<div class="block block--highlighted block-categories block-categories--layout--compact">
+    <div class="container">
+        <div class="block-header">
+            <h3 class="block-header__title">دسته های محبوب</h3>
+            <div class="block-header__divider"></div>
+        </div>
+        <div class="block-categories__list">
+            {% for group in product_groups %}
+            {% include 'partials/products/group_box.html' %}
+            {% endfor %}
+        </div>
+        <div class='product__meta' style="margin-right: 12px;">
+        <a href="{% url 'products:product_groups' %}">نمایش همه دسته ها...</a>
+        </div>
+    </div>
+</div>

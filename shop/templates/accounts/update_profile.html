@@ -1,0 +1,41 @@
+{% extends 'user_panel_template.html' %}
+{% load humanize %}
+{% load render_partial %}
+{% block title %}ویرایش پروفایل |{% endblock title %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5>ویرایش پروفایل</h5></div>
+    <div class="card-divider"></div>
+    <div class="card-body">
+        {% if form.errors %}
+            <div class='form-group jumbotron alert-danger p-0 '>
+                <ul>
+                    {% for error,messages in form.errors.items %}
+                        {% for message in messages %}
+                            <li>{{message}}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <div class="row no-gutters">
+            <div class="col-12 col-lg-7 col-xl-6">
+                <form action="" method='post' enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    {% if image_url %}
+                    <img src="{{media_url}}{{image_url}}" style='width: 100px;height: 100px;' alt="">
+                    {% comment %} {% else %}
+                    <img src="{{media_url}}images/default.png" style='width: 100px;height: 100px;' alt=""> {% endcomment %}
+                    {% endif %}
+                    <div class="form-group">
+                        <button type='submit' class="btn btn-primary mt-4">ذخیره</button>
+                        <a href="{% url 'accounts:user_panel' %}" class="btn btn-info mt-4">انصراف</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

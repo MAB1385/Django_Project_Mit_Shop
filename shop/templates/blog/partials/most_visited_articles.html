@@ -1,0 +1,20 @@
+<div class="block-sidebar__item">
+    <div class="widget-posts widget">
+        <h4 class="widget__title">پربازدیدترین مقالات</h4>
+        <div class="widget-posts__list">
+            {% for article in articles %}
+                <div class="widget-posts__item">
+                    <div class="widget-posts__image">
+                        <a href="{{article.get_absolute_url}}"><img src="{{media_url}}{{article.main_image}}" alt="{{article.title}}"></a>
+                    </div>
+                    <div class="widget-posts__info">
+                        <div class="widget-posts__name">
+                            <a href="{{article.get_absolute_url}}">{{article.title}}</a>
+                        </div>
+                        <div class="widget-posts__date">{{article.publish_date}}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

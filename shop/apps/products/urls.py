@@ -1,0 +1,114 @@
+from django.urls import path
+
+from .views import (
+    AddToCampareList,
+    BrandDetailView,
+    BrandsFilter,
+    CheapestProducts,
+    ColorsFilter,
+    DeleteFromCampareList,
+    FeaturesFilter,
+    FilterValueForFeature,
+    LastProducts,
+    PopularProductGroups,
+    ProductDetailView,
+    ProductGroupsFilter,
+    ProductGroupsView,
+    ProductsByGroupView,
+    RelatedProduct,
+    ShowCompareListView,
+    ShowProductGroupsNavbar,
+    compare_table,
+    status_of_compare_list,
+)
+
+app_name = "products"
+urlpatterns = [
+    path("cheapest_products/", CheapestProducts.as_view(), name="cheapest_products"),
+    path("last_products/", LastProducts.as_view(), name="last_products"),
+    path(
+        "popular_product_group/",
+        PopularProductGroups.as_view(),
+        name="popular_product_group",
+    ),
+    path(
+        "product/<slug:slug>/",
+        ProductDetailView.as_view(),
+        name="product_detail",
+    ),
+    path(
+        "brand/<slug:slug>/",
+        BrandDetailView.as_view(),
+        name="brand_detail",
+    ),
+    path(
+        "related_product/<slug:slug>/",
+        RelatedProduct.as_view(),
+        name="related_product",
+    ),
+    path(
+        "product_groups/",
+        ProductGroupsView.as_view(),
+        name="product_groups",
+    ),
+    path(
+        "product_group/<slug:slug>/",
+        ProductsByGroupView.as_view(),
+        name="product_by_group",
+    ),
+    path(
+        "ajax_admin/",
+        FilterValueForFeature.as_view(),
+        name="ajax_admin",
+    ),
+    path(
+        "product_groups_filter/",
+        ProductGroupsFilter.as_view(),
+        name="product_groups_filter",
+    ),
+    path(
+        "product_brands_filter/<slug:slug>",
+        BrandsFilter.as_view(),
+        name="product_brands_filter",
+    ),
+    path(
+        "product_colors_filter/<slug:slug>",
+        ColorsFilter.as_view(),
+        name="product_colors_filter",
+    ),
+    path(
+        "product_features_filter/<slug:slug>",
+        FeaturesFilter.as_view(),
+        name="product_features_filter",
+    ),
+    path(
+        "compare_list/",
+        ShowCompareListView.as_view(),
+        name="compare_list",
+    ),
+    path(
+        "compare_table/",
+        compare_table,
+        name="compare_table",
+    ),
+    path(
+        "add_to_campare_list/",
+        AddToCampareList.as_view(),
+        name="add_to_campare_list",
+    ),
+    path(
+        "status_of_compare_list/",
+        status_of_compare_list,
+        name="status_of_compare_list",
+    ),
+    path(
+        "delete_from_campare_list/",
+        DeleteFromCampareList.as_view(),
+        name="delete_from_campare_list",
+    ),
+    path(
+        "product_groups_navbar/",
+        ShowProductGroupsNavbar.as_view(),
+        name="product_groups_navbar",
+    ),
+]

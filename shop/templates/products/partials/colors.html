@@ -1,0 +1,14 @@
+{% for color in colors %}
+<label class="filter-color__item">
+    <span class="filter-color__check input-check-color input-check-color--white" style="color: {{color}};">
+        <label class="input-check-color__body">
+            <input class="input-check-color__input" type="checkbox"> 
+            <span class="input-check-color__box"></span>
+        <svg class="input-check-color__icon" width="12px" height="9px">
+            <use xlink:href="{{media_url}}images/sprite.svg#check-12x9"></use>
+        </svg> 
+        <span class="input-check-color__stick"></span>
+        </label>
+    </span>
+</label>
+{% endfor %}

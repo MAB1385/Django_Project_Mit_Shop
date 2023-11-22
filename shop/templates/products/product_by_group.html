@@ -1,0 +1,255 @@
+{% extends 'main_parent.html' %}
+{% load humanize %}
+{% load render_partial %}
+{% block title %}{{product_group.title}} |{% endblock title %}
+{% block content %}
+<div class="site__body">
+    <div class="page-header">
+        <div class="page-header__container container">
+            <div class="page-header__breadcrumb">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'main:home' %}">خانه</a>
+                            /
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'products:product_groups' %}">دسته ها</a>
+                            /
+                        </li>
+                        <li class="active" aria-current="page">{{product_group.title}}</li>
+                    </ol>
+                </nav>
+                <div class="page-header__title">
+                    <h1>محصولات گروه <span style='color: green;'>{{product_group.title}}</span></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        {% if product_group.groups.all|length == 0 %} 
+        {% else %}
+        <div class="block-categories__list">
+            {% for group in product_group.groups.all %}
+                {% include 'partials/products/group_box.html' %}
+            {% endfor %}
+        </div>
+        <br><br>
+        {% endif %}
+        <div class="shop-layout shop-layout--sidebar--start">
+            <div class="shop-layout__sidebar">
+                <div class="block block-sidebar">
+                    <form id='filter' action="" method="get">
+                        <div class="block-sidebar__item">
+                            <div class="widget-filters widget" data-collapse data-collapse-opened-class="filter--opened">
+                                <h4 class="widget__title" style='display: inline-flex;margin'>فیلترها</h4>
+                                {% if flag %}
+                                    <a class='btn-filter-state' href="{{product_group.get_absolute_url}}" style='margin-right:30px;'>
+                                        <li class='fa fa-times'></li>
+                                        حذف فیلتر
+                                    </a>
+                                {% endif %}
+                                <div class="widget-filters__list">
+                                    <div class="widget-filters__item">
+                                        <div class="filter " data-collapse-item>
+                                            <button type="button" class="filter__title" data-collapse-trigger>دسته ها
+                                                <svg class="filter__arrow" width="12px" height="7px">
+                                                    <use xlink:href="images/sprite.svg#arrow-rounded-down-12x7"></use>
+                                                </svg>
+                                            </button>
+                                            {% render_partial 'products:product_groups_filter' %}
+                                        </div>
+                                    </div>
+                                    <div class="widget-filters__item">
+                                        {% include 'partials/products/price_filter.html' %}
+                                    </div>
+                                    <div class="widget-filters__item">
+                                        <div class="filter" data-collapse-item>
+                                            <div style="display: inline-flex;width: 77%;">
+                                                <button type="button" class="filter__title" data-collapse-trigger>برند
+                                                    <svg class="filter__arrow" width="12px" height="7px">
+                                                        <use xlink:href="images/sprite.svg#arrow-rounded-down-12x7"></use>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            {% if brand_flag %}
+                                                <a class='btn-filter-state' href="#" style='margin-right:10px;' onclick='remove_brand()'>
+                                                    <li class='fa fa-times'></li>
+                                                </a>
+                                            {% endif %}
+                                            <div class="filter__body" data-collapse-content>
+                                                <div class="filter__container">
+                                                    <div class="filter-list">
+                                                        <div class="filter-list__list">
+                                                            {% render_partial 'products:product_brands_filter' slug=product_group.slug  %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% comment %} <div class="widget-filters__item">
+                                        <div class="filter filter--opened" data-collapse-item>
+                                            <button type="button" class="filter__title" data-collapse-trigger>برند
+                                                <svg class="filter__arrow" width="12px" height="7px">
+                                                    <use xlink:href="images/sprite.svg#arrow-rounded-down-12x7"></use>
+                                                </svg>
+                                            </button>
+                                            <div class="filter__body" data-collapse-content>
+                                                <div class="filter__container">
+                                                    <div class="filter-list">
+                                                        <div class="filter-list__list">
+                                                            <label class="filter-list__item"><span class="filter-list__input input-radio"><span class="input-radio__body"><input class="input-radio__input" name="filter_radio" type="radio"> <span class="input-radio__circle"></span> </span>
+                                                                </span><span class="filter-list__title">واکیتا </span><span class="filter-list__counter">7</span></label>
+                                                            <label class="filter-list__item"><span class="filter-list__input input-radio"><span class="input-radio__body"><input class="input-radio__input" name="filter_radio" type="radio"> <span class="input-radio__circle"></span> </span>
+                                                                </span><span class="filter-list__title">زوک </span><span class="filter-list__counter">42</span></label>
+                                                            <label class="filter-list__item filter-list__item--disabled"><span class="filter-list__input input-radio"><span class="input-radio__body"><input class="input-radio__input" name="filter_radio" type="radio" checked disabled> <span class="input-radio__circle"></span> </span>
+                                                                </span><span class="filter-list__title">ویوالت</span></label>
+                                                            <label class="filter-list__item filter-list__item--disabled"><span class="filter-list__input input-radio"><span class="input-radio__body"><input class="input-radio__input" name="filter_radio" type="radio" disabled> <span class="input-radio__circle"></span> </span>
+                                                                </span><span class="filter-list__title">هامر</span></label>
+                                                            <label class="filter-list__item"><span class="filter-list__input input-radio"><span class="input-radio__body"><input class="input-radio__input" name="filter_radio" type="radio"> <span class="input-radio__circle"></span> </span>
+                                                                </span><span class="filter-list__title">میتاسیا </span><span class="filter-list__counter">1</span></label>
+                                                            <label class="filter-list__item"><span class="filter-list__input input-radio"><span class="input-radio__body"><input class="input-radio__input" name="filter_radio" type="radio"> <span class="input-radio__circle"></span> </span>
+                                                                </span><span class="filter-list__title">متاگو </span><span class="filter-list__counter">25</span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> {% endcomment %}
+                                    {% comment %} <div class="widget-filters__item">
+                                        <div class="filter " data-collapse-item>
+                                            <button type="button" class="filter__title" data-collapse-trigger>رنگ
+                                                <svg class="filter__arrow" width="12px" height="7px">
+                                                    <use xlink:href="images/sprite.svg#arrow-rounded-down-12x7"></use>
+                                                </svg>
+                                            </button>
+                                            <div class="filter__body" data-collapse-content>
+                                                <div class="filter__container">
+                                                    <div class="filter-color">
+                                                        <div class="filter-color__list">
+                                                            {% render_partial 'products:product_colors_filter' slug=product_group.slug %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> {% endcomment %}
+                                    {% render_partial 'products:product_features_filter'  slug=product_group.slug %}
+                                </div>
+                                <div class="widget-filters__actions d-flex">
+                                    <button type='submit' class="btn btn-primary btn-sm">فیلتر</button>
+                                    {% comment %} <button class="btn btn-secondary btn-sm">بازنشانی</button> {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    {% comment %} <div class="block-sidebar__item d-none d-lg-block">
+                        <div class="widget-products widget">
+                            <h4 class="widget__title">محصولات جدید</h4>
+                            <div class="widget-products__list">
+                                <div class="widget-products__item">
+                                    <div class="widget-products__image">
+                                        <a href="product.html">
+                                            <img src="https://picsum.photos/700/700" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="widget-products__info">
+                                        <div class="widget-products__name"><a href="product.html">اره برقی برندیکس مدل 300 وات</a></div>
+                                        <div class="widget-products__prices">749,000 تومان</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> {% endcomment %}
+                </div>
+            </div>
+            <div class="shop-layout__content">
+                <div class="block">
+                    <div class="products-view">
+                        <div class="products-view__options">
+                            <div class="view-options">
+
+                                <div class="view-options__legend">تعداد کل محصولات این گروه: {{products|length}}</div>
+                                <div class="view-options__divider"></div>
+                                <div class="view-options__control">
+                                    <label for="">مرتب‌سازی بر اساس</label>
+                                    <div>
+                                        <select class="form-control form-control-sm" name="" id="select_sort" onchange='select_sort()'>
+                                            {% if sort_type == '0' %}
+                                                <option value="0" selected>پیش فرض</option>
+                                                <option value="1">قیمت از کم به زیاد</option>
+                                                <option value="2">قیمت از زیاد به کم</option>
+                                            {% elif sort_type == '1' %}
+                                                <option value="0">پیش فرض</option>
+                                                <option value="1" selected>قیمت از کم به زیاد</option>
+                                                <option value="2">قیمت از زیاد به کم</option>
+                                            {% elif sort_type == '2' %}
+                                                <option value="0">پیش فرض</option>
+                                                <option value="1">قیمت از کم به زیاد</option>
+                                                <option value="2" selected>قیمت از زیاد به کم</option>
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="view-options__control">
+                                    <label for="">نمایش</label>
+                                    <div>
+                                        <select class="form-control form-control-sm" name="" id="display" onchange='display()'>
+                                            {% if display == '9' %}
+                                                <option value="2">2</option>
+                                                <option value="6">6</option>
+                                                <option value="9" selected>9</option>
+                                            {% elif display == '2' %}
+                                                <option value="2" selected>2</option>
+                                                <option value="6">6</option>
+                                                <option value="9">9</option>
+                                            {% elif display == '6' %}
+                                                <option value="2">2</option>
+                                                <option value="6" selected>6</option>
+                                                <option value="9">9</option>
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="products-view__list products-list" data-layout="grid-3-sidebar" data-with-features="false">
+                            <div class="products-list__body">
+                                {% for product in page_obj %}
+                                {% include 'partials/products/product_box.html' with type=3  %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="products-view__pagination">
+                            {% if products and page_obj|length < products|length %}
+                                {% include 'partials/pager.html' %}
+                            {% endif %}
+                            {% comment %} <ul class="pagination justify-content-center">
+                                <li class="page-item disabled">
+                                    <a class="page-link page-link--with-arrow" href="" aria-label="Previous">
+                                        <svg class="page-link__arrow page-link__arrow--left" aria-hidden="true" width="8px" height="13px">
+                                            <use xlink:href="images/sprite.svg#arrow-rounded-left-8x13"></use>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="">1</a></li>
+                                <li class="page-item active"><a class="page-link" href="">2 <span class="sr-only">(کنونی)</span></a></li>
+                                <li class="page-item"><a class="page-link" href="">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link page-link--with-arrow" href="" aria-label="Next">
+                                        <svg class="page-link__arrow page-link__arrow--right" aria-hidden="true" width="8px" height="13px">
+                                            <use xlink:href="images/sprite.svg#arrow-rounded-right-8x13"></use>
+                                        </svg>
+                                    </a>
+                                </li>
+                            </ul> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

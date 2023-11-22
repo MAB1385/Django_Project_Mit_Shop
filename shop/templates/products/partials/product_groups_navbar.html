@@ -1,0 +1,28 @@
+<div class="megamenu">
+    <div class="row">
+        {% for main_group in main_groups %}
+            <div class="col-4">
+                <ul class="megamenu__links megamenu__links--level--0">
+                    <li class="megamenu__item megamenu__item--with-submenu">
+                        <a href="#">{{main_group.title}}</a>
+                        <ul class="megamenu__links megamenu__links--level--1">
+                            {% for group1 in main_group.groups.all %}
+                                <li class="megamenu__item">
+                                    <a href="{{group1.get_absolute_url}}">{{group1.title}}</a>
+                                    {% comment %} <ul>
+                                        {% for group2 in group1.groups.all %}
+                                            <li class="megamenu__links--level--2">
+                                                <a href="{{group2.get_absolute_url}}">{{group2.title}}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul> {% endcomment %}
+                                </li>
+                            {% endfor %}
+                            
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+</div>

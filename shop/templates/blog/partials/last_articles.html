@@ -1,0 +1,41 @@
+<div class="block block-posts block-posts--layout--grid-nl" data-layout="grid-nl">
+    <div class="container">
+        <div class="block-header">
+            <h3 class="block-header__title">آخرین مقالات</h3>
+            <div class="block-header__divider"></div>
+            <div class="block-header__arrows-list">
+
+                <button class="block-header__arrow block-header__arrow--left" type="button">
+                    <i class="fas fa-angle-right"></i>
+                </button>
+                <button class="block-header__arrow block-header__arrow--right" type="button">
+                    <i class="fas fa-angle-left"></i>
+                </button>
+            </div>
+        </div>
+        <div class="block-posts__slider" style='display: flex;'>
+            {% for article in articles %}
+            <div class="" style='margin-bottom: 30px;width: 350px;margin-left: 30px;user-select: none;touch-action: pan-y;min-height: 1px ;-webkit-tap-highlight-color: transparent;position: relative;box-sizing: border-box;-webkit-transform: translate3d(0,0,0);'>
+                <div class="post-card">
+                    <div class="post-card__image">
+                        <a href="">
+                            <img src="{{media_url}}{{article.main_image}}" alt="{{article.title}}">
+                        </a>
+                    </div>
+                    <div class="post-card__info">
+                        <div class="post-card__category" style="display: block;"> . {{article.group}}</div>
+                        <div class="post-card__name"><a href="{{article.get_absolute_url}}">{{article.title}}</a></div>
+                        <div class="post-card__date">{{article.publish_date}}</div>
+                        {% comment %} <div class="post-card__content"></div> {% endcomment %}
+                        <div class="post-card__read-more" style="display: block;margin-top:30px"><a href="{{article.get_absolute_url}}" class="btn btn-secondary btn-sm">بیشتر بخوانید</a></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+            
+        </div>
+    </div>
+</div>
+<br>
+{% comment %} width: 350px;margin-left: 30px;float: right;user-select: none;touch-action: pan-y;min-height: 1px ,-webkit-tap-highlight-color: transparent;position: relative;box-sizing: border-box;-webkit-transform: translate3d(0,0,0); {% endcomment %}

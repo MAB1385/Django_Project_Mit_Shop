@@ -1,0 +1,15 @@
+{% load humanize %}
+<div class="block-categories__item category-card category-card--layout--compact">
+    <div class="category-card__body">
+        <div class="category-card__image">
+            <a href="{{group.get_absolute_url}}">
+                <img src="{{media_url}}{{group.image}}" alt="{{group.title}}">
+            </a>
+        </div>
+        <div class="category-card__content">
+            <div class="category-card__name"><a href="{{group.get_absolute_url}}">{{group.title}}</a></div>
+            <div class="category-card__all"><a href="{{group.get_absolute_url}}">نمایش همه</a></div>
+            <div class="category-card__products">{{group.products_of_groups.all | length | intcomma:False}} محصول</div>
+        </div>
+    </div>
+</div>
