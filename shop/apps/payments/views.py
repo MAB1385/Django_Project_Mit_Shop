@@ -99,7 +99,7 @@ class ZarinpalPaymentVerifyView(LoginRequiredMixin, View):
         data = json.dumps(data)
         # set content length by data
         headers = {"content-type": "application/json", "content-length": str(len(data))}
-        response = requests.post(ZP_API_VERIFY, data=data, headers=headers)
+        response = requests.post(ZP_API_VERIFY, data=data, headers=headers, timeout=60)
 
         if response.status_code == 200:
             response = response.json()
