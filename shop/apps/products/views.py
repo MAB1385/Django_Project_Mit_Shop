@@ -173,8 +173,7 @@ class ProductsByGroupView(View):
 
         #! To brand filter
         global brand_list
-        brand_list = self.request.GET.getlist("brand")
-        if brand_list:
+        if brand_list := self.request.GET.getlist("brand"):
             products = products.filter(brand__id__in=brand_list)
             flag = True
             for i in brand_list:
@@ -182,8 +181,7 @@ class ProductsByGroupView(View):
 
         #! To feature filter
         global feature_list
-        feature_list = self.request.GET.getlist("feature")
-        if feature_list:
+        if feature_list := self.request.GET.getlist("feature"):
             products = products.filter(
                 product_features__filter_value__id__in=feature_list
             ).distinct()

@@ -9,8 +9,7 @@ from .models import Article, Article_Group, Author
 
 
 def de_active_article(modeladmin, request, queryset):
-    res = queryset.update(is_active=False)
-    if res == 1:
+    if (res := queryset.update(is_active=False)) == 1:
         message = "مقاله انتخاب شده غیر فعال شد."
     else:
         message = f"{res} مقاله انتخاب شده غیر فعال شدند."
@@ -18,8 +17,7 @@ def de_active_article(modeladmin, request, queryset):
 
 
 def active_article(modeladmin, request, queryset):
-    res = queryset.update(is_active=True)
-    if res == 1:
+    if (res := queryset.update(is_active=True)) == 1:
         message = "مقاله انتخاب شده فعال شد."
     else:
         message = f"{res} مقاله انتخاب شده فعال شدند."
@@ -27,8 +25,7 @@ def active_article(modeladmin, request, queryset):
 
 
 def de_active_author(modeladmin, request, queryset):
-    res = queryset.update(is_active=False)
-    if res == 1:
+    if (res := queryset.update(is_active=False)) == 1:
         message = "نویسنده انتخاب شده غیر فعال شد."
     else:
         message = f"{res} نویسنده انتخاب شده غیر فعال شدند."
@@ -36,8 +33,7 @@ def de_active_author(modeladmin, request, queryset):
 
 
 def active_author(modeladmin, request, queryset):
-    res = queryset.update(is_active=True)
-    if res == 1:
+    if (res := queryset.update(is_active=True)) == 1:
         message = "نویسنده انتخاب شده فعال شد."
     else:
         message = f"{res} نویسنده انتخاب شده فعال شدند."

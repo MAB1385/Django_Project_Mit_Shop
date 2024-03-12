@@ -96,10 +96,9 @@ class AddToFavorite(View):
 class DeleteFromFavorite(View):
     def get(self, *args, **kwargs):
         productId = self.request.GET.get("productId")
-        flag = Favorite.objects.filter(
+        if flag := Favorite.objects.filter(
             Q(favorite_user_id=self.request.user.id) & Q(product_id=productId)
-        ).exists()
-        if flag:
+        ).exists():
             Favorite.objects.filter(
                 Q(favorite_user_id=self.request.user.id) & Q(product_id=productId)
             ).delete()

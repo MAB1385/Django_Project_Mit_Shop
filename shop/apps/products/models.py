@@ -167,8 +167,7 @@ class Product(models.Model):
         return count
 
     def get_average_score(self):
-        avg_score = self.product_scoring.all().aggregate(Avg("score"))["score__avg"]
-        if avg_score == None:
+        if (avg_score := self.product_scoring.all().aggregate(Avg("score"))["score__avg"]) == None:
             avg_score = 0
         return avg_score
 

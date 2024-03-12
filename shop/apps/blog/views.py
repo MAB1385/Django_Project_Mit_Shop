@@ -72,8 +72,7 @@ class SearchArticleView(View):
     template_name = BASE_BLOG + "search_view.html"
 
     def get(self, *args, **kwargs):
-        query = str(self.request.GET.get("q")).strip()
-        if query == "":
+        if (query := str(self.request.GET.get("q")).strip()) == "":
             return redirect("blog:show_articles")
         articles = Article.objects.filter(
             Q(title__icontains=query)

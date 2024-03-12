@@ -10,8 +10,7 @@ from .filters import ProductsFilter
 
 class SearchResultsView(View):
     def get(self, *args, **kwargs):
-        query = str(self.request.GET.get("q")).strip()
-        if query == "":
+        if (query := str(self.request.GET.get("q")).strip()) == "":
             return redirect("main:home")
         products = Product.objects.filter(
             Q(name__icontains=query)
@@ -39,8 +38,7 @@ class SearchResultsView(View):
 
         #! To brand filter
         global brand_list
-        brand_list = self.request.GET.getlist("brand")
-        if brand_list:
+        if brand_list := self.request.GET.getlist("brand"):
             products = products.filter(brand__id__in=brand_list)
             flag = True
             for i in brand_list:
@@ -48,8 +46,7 @@ class SearchResultsView(View):
 
         #! To feature filter
         global feature_list
-        feature_list = self.request.GET.getlist("feature")
-        if feature_list:
+        if feature_list := self.request.GET.getlist("feature"):
             products = products.filter(
                 product_features__filter_value__id__in=feature_list
             ).distinct()

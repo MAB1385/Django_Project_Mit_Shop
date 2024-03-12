@@ -69,8 +69,7 @@ def do_expr(parser, token):
         raise template.TemplateSyntaxError(
             "%r tag requires arguments" % token.contents[0]
         )
-    m = r_expr.search(arg)
-    if m:
+    if m := r_expr.search(arg):
         expr_string, var_name = m.groups()
     else:
         if not arg:

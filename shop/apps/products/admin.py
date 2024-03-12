@@ -29,8 +29,7 @@ from .models import (
 
 # todo --------------------------------------------------------------------
 def de_active_product_group(modeladmin, request, queryset):
-    res = queryset.update(is_active=False)
-    if res == 1:
+    if (res := queryset.update(is_active=False)) == 1:
         message = "گروه کالای انتخاب شده غیر فعال شد."
     else:
         message = f"{res} گروه کالای انتخاب شده غیر فعال شدند."
@@ -38,8 +37,7 @@ def de_active_product_group(modeladmin, request, queryset):
 
 
 def active_product_group(modeladmin, request, queryset):
-    res = queryset.update(is_active=True)
-    if res == 1:
+    if (res := queryset.update(is_active=True)) == 1:
         message = "گروه کالای انتخاب شده فعال شد."
     else:
         message = f"{res} گروه کالای انتخاب شده فعال شدند."
@@ -215,8 +213,7 @@ class ProductGroupAdmin(admin.ModelAdmin):
 
 # todo --------------------------------------------------------------------
 def de_active_product(modeladmin, request, queryset):
-    res = queryset.update(is_active=False)
-    if res == 1:
+    if (res := queryset.update(is_active=False)) == 1:
         message = "کالای انتخاب شده غیر فعال شد."
     else:
         message = f"{res} کالای انتخاب شده غیر فعال شدند."
@@ -224,8 +221,7 @@ def de_active_product(modeladmin, request, queryset):
 
 
 def active_product(modeladmin, request, queryset):
-    res = queryset.update(is_active=True)
-    if res == 1:
+    if (res := queryset.update(is_active=True)) == 1:
         message = "کالای انتخاب شده فعال شد."
     else:
         message = f"{res} کالای انتخاب شده فعال شدند."
