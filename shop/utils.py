@@ -1,10 +1,10 @@
 from os import path
-from random import randint
 from time import time
 from uuid import uuid4
 
 from django.db import connection, reset_queries
 from kavenegar import APIException, HTTPException, KavenegarAPI
+import secrets
 
 
 def create_random_code(number):
@@ -17,7 +17,7 @@ def create_random_code(number):
         int: random number
     """
     number -= 1
-    return randint(10**number, 10 ** (number + 1) - 1)
+    return secrets.SystemRandom().randint(10**number, 10 ** (number + 1) - 1)
 
 
 # todo --------------------------------------------------------------
